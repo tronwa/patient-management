@@ -2,13 +2,20 @@ spring:
   application:
     name: patient-service
   datasource:
-    url: jdbc:postgresql://localhost:5432/hospital?currentSchema=patient-service-schema
+    url: jdbc:postgresql://localhost:5432/hospital?currentSchema=patient_service_schema
     username: hospital
     password: top-secret!
+    hikari:
+      auto-commit: false
   flyway:
     enabled: true
-    schemas: patient-service-schema
+    schemas: patient_service_schema
     create-schemas: true
+    execute-in-transaction: false
+    baseline-on-migrate: false
   sql:
     init:
       mode: always
+  docker:
+    compose:
+      file: docker/docker-compose.yaml
