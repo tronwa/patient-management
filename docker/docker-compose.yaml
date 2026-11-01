@@ -1,0 +1,12 @@
+services:
+  db:
+    image: postgres:16-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: hospital
+      POSTGRES_PASSWORD: top-secret!
+      POSTGRES_DB: hospital
+    volumes:
+      - ../db-data/:/var/lib/postgresql/data/
+

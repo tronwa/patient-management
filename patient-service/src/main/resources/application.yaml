@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: patient-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/hospital?currentSchema=patient-service-schema
+    username: hospital
+    password: top-secret!
+  flyway:
+    enabled: true
+    schemas: patient-service-schema
+    create-schemas: true
+  sql:
+    init:
+      mode: always
