@@ -1,0 +1,15 @@
+package net.walseth.pm.patientservice.write.registerpatient
+
+import net.walseth.pm.patientservice.events.RegisterPatientEvent
+import net.walseth.pm.patientservice.read.repositories.PatientViewRepository
+import net.walseth.pm.patientservice.read.views.PatientView
+import org.axonframework.messaging.eventhandling.annotation.EventHandler
+import org.springframework.stereotype.Component
+
+@Component
+class RegisterPatientEventHandler(val repository: PatientViewRepository) {
+
+    @EventHandler
+    fun handleRegistration(event: RegisterPatientEvent) =
+        PatientView.from(event).also(repository::save)
+}

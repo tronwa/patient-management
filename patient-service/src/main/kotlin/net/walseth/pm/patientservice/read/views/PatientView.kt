@@ -1,5 +1,6 @@
 package net.walseth.pm.patientservice.read.views
 
+import net.walseth.pm.patientservice.events.RegisterPatientEvent
 import org.springframework.data.annotation.Id
 import org.springframework.data.domain.Persistable
 import org.springframework.data.relational.core.mapping.Column
@@ -21,4 +22,15 @@ data class PatientView(
 ): Persistable<String> {
     override fun getId() = _id
     override fun isNew() = new
+
+    companion object {
+        fun from(event: RegisterPatientEvent) = PatientView(
+            event.patientId.id,
+            event.name,
+            event.email,
+            event.address,
+            event.dateOfBirth,
+            event.registrationDate,
+        )
+    }
 }
