@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    hikari:
+      auto-commit: false
+      schema: patient_service_schema
+  flyway:
+    enabled: true
+    schemas: patient_service_schema
+    create-schemas: true
+    execute-in-transaction: false
+    baseline-on-migrate: false
+
+  docker:
+    compose:
+      enabled: false

@@ -5,7 +5,7 @@ import net.walseth.pm.patientservice.write.registerpatient.RegisterPatientComman
 import org.axonframework.eventsourcing.annotation.EventTag
 import java.time.LocalDate
 
-data class RegisterPatientEvent(
+data class PatientRegisteredEvent(
     @EventTag("patientId")
     val patientId: PatientId,
     val name: String,
@@ -15,8 +15,8 @@ data class RegisterPatientEvent(
     val registrationDate: LocalDate = LocalDate.now(),
 ) {
     companion object {
-        fun from(command: RegisterPatientCommand): RegisterPatientEvent {
-            return RegisterPatientEvent(
+        fun from(command: RegisterPatientCommand): PatientRegisteredEvent {
+            return PatientRegisteredEvent(
                 command.id,
                 command.name,
                 command.email,

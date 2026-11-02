@@ -1,6 +1,6 @@
 package net.walseth.pm.patientservice.write.registerpatient
 
-import net.walseth.pm.patientservice.events.RegisterPatientEvent
+import net.walseth.pm.patientservice.events.PatientRegisteredEvent
 import org.axonframework.messaging.commandhandling.annotation.CommandHandler
 import org.axonframework.messaging.eventhandling.gateway.EventAppender
 import org.springframework.stereotype.Component
@@ -13,7 +13,7 @@ class RegisterPatientCommandHandler {
         command: RegisterPatientCommand,
         appender: EventAppender,
     ) {
-      val event = RegisterPatientEvent.from(command)
+      val event = PatientRegisteredEvent.from(command)
       appender.append(event)
     }
 }
