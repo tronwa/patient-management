@@ -10,6 +10,7 @@ version = "0.0.1-SNAPSHOT"
 
 val axonVersion = "5.4.1"
 val kotestVersion = "6.2.6"
+val springdocVersion = "3.2.0"
 
 java {
 	toolchain {
@@ -39,6 +40,7 @@ dependencies {
 	implementation("org.axonframework:axon-messaging")
 	implementation("org.axonframework.extensions.spring:axon-spring-boot-starter")
 	implementation("io.axoniq.framework:axoniq-postgresql:${axonVersion}")
+	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:${springdocVersion}")
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	developmentOnly("org.springframework.boot:spring-boot-docker-compose")
 	runtimeOnly("org.postgresql:postgresql")
