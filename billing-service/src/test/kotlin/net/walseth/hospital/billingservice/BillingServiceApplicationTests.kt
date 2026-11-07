@@ -1,0 +1,13 @@
+package net.walseth.hospital.billingservice
+
+import org.junit.jupiter.api.Test
+import org.springframework.boot.test.context.SpringBootTest
+
+@SpringBootTest
+class BillingServiceApplicationTests {
+
+    @Test
+    fun contextLoads() {
+    }
+
+}
