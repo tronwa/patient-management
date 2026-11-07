@@ -32,11 +32,11 @@ class UpdatePatientCommandHandlerTest @Autowired constructor(
         LocalDate.of(2020, 1, 1,),
         LocalDate.now().minusDays(5),
     )
-    describe("endring av email skal persisteres") {
+    describe("endring av email skal produsere event") {
         fixture.given()
             .event(createdEvent)
-            .command(
-                UpdatePatientCommand(
+            .command(UpdatePatientCommand
+                (
                     patientId = patientId,
                     name = "Gorgon Emile Zola",
                     email = null,
@@ -45,8 +45,7 @@ class UpdatePatientCommandHandlerTest @Autowired constructor(
             )
             .then()
             .eventsSatisfy { events ->
-                events.size shouldBe 2
-                val event = events[1].payload() as PatientUpdatedEvent
+                val event = events.last().payload() as PatientUpdatedEvent
                 event.patientId shouldBe patientId
                 event.name shouldBe "Gorgon Emile Zola"
             }

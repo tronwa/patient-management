@@ -3,10 +3,25 @@ services:
     image: postgres:16-alpine
     ports:
       - "5432:5432"
-    environment:
-      POSTGRES_USER: hospital
-      POSTGRES_PASSWORD: top-secret!
-      POSTGRES_DB: hospital
+    env_file:
+      - ../envfiles/.db.env
     volumes:
       - ../db-data/:/var/lib/postgresql/data/
+
+#  rabbitmq:
+#    image: rabbitmq:4.4.0-management-alpine
+#    container_name: hospital-rabbit
+#    ports:
+#      - "5672:5672"
+#      - "15672:15672"
+#    environment:
+#      RABBITMQ_DEFAULT_USER: gorgon
+#      RABBITMQ_DEFAULT_PASS: gorgon
+
+  patient-service:
+    build:
+      dockerfile: patient-service
+    env_file:
+      - ../envfiles/.patient-service.env
+
 

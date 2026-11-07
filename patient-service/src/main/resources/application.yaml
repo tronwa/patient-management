@@ -2,11 +2,10 @@ spring:
   application:
     name: patient-service
   datasource:
-    url: jdbc:postgresql://localhost:5432/hospital?currentSchema=patient_service_schema
-    username: hospital
-    password: top-secret!
     hikari:
       auto-commit: false
+      schema: patient_service_schema
+      connection-init-sql: SET search_path TO patient_service_schema
   flyway:
     enabled: true
     schemas: patient_service_schema
