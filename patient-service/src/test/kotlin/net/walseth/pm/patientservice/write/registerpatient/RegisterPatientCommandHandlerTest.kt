@@ -12,11 +12,13 @@ import org.axonframework.extension.springboot.test.AxonSpringBootTest
 import org.axonframework.test.fixture.AxonTestFixture
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Import
+import org.springframework.test.annotation.DirtiesContext
 import java.time.LocalDate
 
 @AxonSpringBootTest
 @ApplyExtension(SpringExtension::class)
 @Import(TestcontainersConfiguration::class)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 class RegisterPatientCommandHandlerTest(
     @Autowired val fixture: AxonTestFixture,
 ): DescribeSpec( {

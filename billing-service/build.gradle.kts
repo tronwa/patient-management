@@ -10,6 +10,10 @@ group = "net.walseth.hospital"
 version = "0.0.1-SNAPSHOT"
 description = "billing-service"
 
+val axonVersion = "5.4.1"
+val kotestVersion = "6.2.6"
+val springdocVersion = "3.2.0"
+
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(25)
@@ -20,15 +24,37 @@ repositories {
     mavenCentral()
 }
 
+dependencyManagement {
+    imports {
+        mavenBom("org.axonframework:axon-framework-bom:$axonVersion")
+        mavenBom("io.kotest:kotest-bom:$kotestVersion")
+    }
+}
+
 dependencies {
-    implementation("org.springframework.boot:spring-boot-starter-grpc-server")
+    implementation("org.springframework.boot:spring-boot-starter-flyway")
+    implementation("org.flywaydb:flyway-core:11.0.0")
+    implementation("org.flywaydb:flyway-database-postgresql:11.0.0")
     implementation("org.springframework.boot:spring-boot-starter-webmvc")
+    implementation("org.springframework.boot:spring-boot-starter-amqp")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("tools.jackson.module:jackson-module-kotlin")
+    implementation("org.axonframework:axon-eventsourcing")
+    implementation("org.axonframework:axon-messaging")
+    implementation("org.axonframework.extensions.spring:axon-spring-boot-starter")
+    implementation("io.axoniq.framework:axoniq-postgresql:${axonVersion}")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
-    testImplementation("org.springframework.boot:spring-boot-starter-grpc-server-test")
+    runtimeOnly("org.postgresql:postgresql")
     testImplementation("org.springframework.boot:spring-boot-starter-webmvc-test")
+    testImplementation("org.springframework.boot:spring-boot-testcontainers")
+    testImplementation("org.axonframework:axon-test")
+    testImplementation("org.axonframework.extensions.spring:axon-spring-boot-starter-test")
+    testImplementation("io.kotest:kotest-runner-junit5")
+    testImplementation("io.kotest:kotest-assertions-core")
+    testImplementation("io.kotest:kotest-extensions-spring")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
+    testImplementation("org.testcontainers:testcontainers-junit-jupiter")
+    testImplementation("org.testcontainers:testcontainers-postgresql")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
@@ -40,4 +66,24 @@ kotlin {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+tasks.bootRun {
+    doFirst {
+        val dotenvFile = rootProject.file(".env")
+        
+        if (dotenvFile.exists()) {
+            dotenvFile.readLines().forEach { line ->
+                if (line.isNotEmpty() && !line.startsWith("#")) {
+                    val parts = line.split("=", limit = 2)
+                    if (parts.size == 2) {
+                        val key = parts[0].trim()
+                        val value = parts[1].trim().removeSurrounding("\"")
+                        environment[key] = value
+                    }
+                }
+            }
+        }
+    }
+    systemProperties["spring.profiles.active"] = "local"
 }

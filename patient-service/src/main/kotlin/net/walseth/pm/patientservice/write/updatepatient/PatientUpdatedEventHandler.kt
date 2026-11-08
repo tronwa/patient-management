@@ -16,9 +16,9 @@ class PatientUpdatedEventHandler(val patientViewRepository: PatientViewRepositor
             name = event.name ?:  patientView.name,
             email = event.email ?:  patientView.email,
             address = event.address ?:  patientView.address,
+            new = false,
         ) .also {
             patientViewRepository.save(it)
         }
-
     }
 }

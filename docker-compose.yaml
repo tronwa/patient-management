@@ -1,0 +1,19 @@
+services:
+  db:
+    image: postgres:16-alpine
+    ports:
+      - "5432:5432"
+    env_file:
+      - envfiles/.db.env
+    volumes:
+      - ./db-data:/var/lib/postgresql/data/
+
+  rabbitmq:
+    image: rabbitmq:4.4.0-management-alpine
+    container_name: hospital-rabbit
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    env_file:
+      - envfiles/.rabbit.env
+

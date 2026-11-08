@@ -10,3 +10,7 @@ envfiles
 .idea
 .gradle
 db-data
+
+# Ignore local application configuration with secrets
+application-local.yaml
+**/src/main/resources/application-local.yaml

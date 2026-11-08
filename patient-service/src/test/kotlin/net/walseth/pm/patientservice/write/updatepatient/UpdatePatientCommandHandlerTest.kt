@@ -13,6 +13,7 @@ import org.axonframework.test.fixture.AxonTestFixture
 import org.junit.jupiter.api.Assertions.*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Import
+import org.springframework.test.annotation.DirtiesContext
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter.event
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -20,10 +21,11 @@ import java.time.LocalDateTime
 @AxonSpringBootTest
 @ApplyExtension(SpringExtension::class)
 @Import(TestcontainersConfiguration::class)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 class UpdatePatientCommandHandlerTest @Autowired constructor(
     val fixture: AxonTestFixture
 ): DescribeSpec({
-    val patientId = PatientId("Patient:bingobongo")
+    val patientId = PatientId("Patient:bingobongo2")
     val createdEvent = PatientRegisteredEvent(
         patientId,
         "Gorgon Zola",

@@ -5,5 +5,6 @@ CREATE TABLE IF NOT EXISTS patient_view(
     address varchar NOT NULL,
     date_of_birth date NOT NULL,
     registered_date date NOT NULL,
+    version bigint DEFAULT 0,
     CONSTRAINT pk_patient PRIMARY KEY (id)
 );

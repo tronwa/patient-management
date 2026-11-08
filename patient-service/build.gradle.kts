@@ -32,8 +32,10 @@ dependencyManagement {
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-jdbc")
 	implementation("org.springframework.boot:spring-boot-starter-flyway")
+	implementation("org.flywaydb:flyway-core:11.0.0")
+	implementation("org.flywaydb:flyway-database-postgresql:11.0.0")
 	implementation("org.springframework.boot:spring-boot-starter-webmvc")
-	implementation("org.flywaydb:flyway-database-postgresql")
+	implementation("org.springframework.boot:spring-boot-starter-amqp")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("tools.jackson.module:jackson-module-kotlin")
 	implementation("org.axonframework:axon-eventsourcing")
@@ -42,7 +44,6 @@ dependencies {
 	implementation("io.axoniq.framework:axoniq-postgresql:${axonVersion}")
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:${springdocVersion}")
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
-	developmentOnly("org.springframework.boot:spring-boot-docker-compose")
 	runtimeOnly("org.postgresql:postgresql")
 	testImplementation("org.springframework.boot:spring-boot-starter-data-jdbc-test")
 	testImplementation("org.springframework.boot:spring-boot-starter-flyway-test")
@@ -67,4 +68,26 @@ kotlin {
 
 tasks.withType<Test> {
 	useJUnitPlatform()
+	// Disable parallel test execution to avoid database isolation conflicts
+	systemProperties["junit.jupiter.execution.parallel.enabled"] = "false"
+}
+
+tasks.bootRun {
+	doFirst {
+		val dotenvFile = rootProject.file(".env")
+		
+		if (dotenvFile.exists()) {
+			dotenvFile.readLines().forEach { line ->
+				if (line.isNotEmpty() && !line.startsWith("#")) {
+					val parts = line.split("=", limit = 2)
+					if (parts.size == 2) {
+						val key = parts[0].trim()
+						val value = parts[1].trim().removeSurrounding("\"")
+						environment[key] = value
+					}
+				}
+			}
+		}
+	}
+	systemProperties["spring.profiles.active"] = "local"
 }

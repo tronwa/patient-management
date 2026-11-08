@@ -2,6 +2,10 @@ spring:
   application:
     name: patient-service
   datasource:
+    url: jdbc:postgresql://${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
+    driver-class-name: org.postgresql.Driver
     hikari:
       auto-commit: false
       schema: patient_service_schema
@@ -12,12 +16,18 @@ spring:
     create-schemas: true
     execute-in-transaction: false
     baseline-on-migrate: false
+
+server:
+  port: 8081
   sql:
     init:
       mode: always
-  docker:
-    compose:
-      file: docker/docker-compose.yaml
+  rabbitmq:
+    host: ${RABBIT_HOST}
+    port: 5672
+    username: ${RABBIT_DEFAULT_USER}
+    password: ${RABBIT_DEFAULT_PASS}
+
 # swagger-ui custom path
 springdoc:
   swagger-ui:
