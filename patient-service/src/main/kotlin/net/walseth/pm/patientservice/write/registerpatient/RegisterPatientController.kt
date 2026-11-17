@@ -46,7 +46,7 @@ class RegisterPatientController(
         @RequestBody patientRequest: RegisterPatientRequest
     ): ResponseEntity<Unit> {
         require(!patientViewRepository.existsByEmail(patientRequest.email)) { "email already exists" }
-        val patientId = PatientId("Patient:${UUID.randomUUID().toString()}")
+        val patientId = PatientId.randomId()
         val command = RegisterPatientCommand(
             patientId,
             patientRequest.name,

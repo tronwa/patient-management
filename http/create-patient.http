@@ -1,0 +1,11 @@
+POST http://localhost:8081/hospital/v1/register-patient/
+Content-Type: application/json
+
+{
+  "name": "Gorgon Zola",
+  "address": "123 Springfield Rd, 43456 Duckburg Calisota",
+  "dateOfBirth": "1956-11-02",
+  "email": "gorgon@zola.com"
+}
+
+###
