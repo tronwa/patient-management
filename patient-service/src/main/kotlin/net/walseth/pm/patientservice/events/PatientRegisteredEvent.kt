@@ -26,3 +26,23 @@ data class PatientRegisteredEvent(
         }
     }
 }
+
+data class PatientRegisteredEventDto(
+    val patientId: PatientId,
+    val name: String,
+    val email: String,
+    val address: String,
+    val dateOfBirth: LocalDate,
+    val registrationDate: LocalDate,
+)
+
+fun PatientRegisteredEvent.toDto(): PatientRegisteredEventDto {
+    return PatientRegisteredEventDto(
+        patientId = this.patientId,
+        name = this.name,
+        email = this.email,
+        address = this.address,
+        dateOfBirth = this.dateOfBirth,
+        registrationDate = this.registrationDate,
+    )
+}

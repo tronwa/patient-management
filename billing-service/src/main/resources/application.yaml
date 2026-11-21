@@ -10,15 +10,12 @@ spring:
       auto-commit: false
       schema: billing_service_schema
       connection-init-sql: SET search_path TO billing_service_schema
-    flyway:
-      enabled: true
-      schemas: billing_service_schema
-      create-schemas: true
-      execute-in-transaction: false
-      baseline-on-migrate: true
-  sql:
-    init:
-      mode: always
+  flyway:
+    enabled: true
+    schemas: billing_service_schema
+    create-schemas: true
+    execute-in-transaction: false
+    baseline-on-migrate: true
   docker:
     compose:
       file: docker/docker-compose.yaml

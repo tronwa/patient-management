@@ -14,12 +14,14 @@ class RegisterPatientProducer(
     val rabbitTemplate: RabbitTemplate,
 ) {
 
+/*
     @EventHandler
-    fun submitPatient(patient: PatientRegisteredEvent) {
+    fun submitPatient(patientEvent: PatientRegisteredEvent) {
          rabbitTemplate.convertAndSend(
             patientExchange.name,
             RabbitMqConfig.NEW_PATIENT_KEY,
-            patient
+            patientEvent.toDto()
         )
     }
+*/
 }
