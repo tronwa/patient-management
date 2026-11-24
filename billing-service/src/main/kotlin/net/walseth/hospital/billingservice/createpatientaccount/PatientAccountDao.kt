@@ -17,9 +17,17 @@ interface PatientAccountDao {
     fun save(@BindBean account: PatientAccount)
 
     @SqlQuery("""
-        SELECT patient_id, patient_name, name, email, address
-        FROM patient_account p
-        where account.id=:accountId
+        SELECT account_id, patient_id, name, email, address
+        FROM patient_accounts
+        WHERE account_id = :accountId
     """)
-    fun findByAccountId(@Bind accountId: AccountId): PatientAccount
+    fun findByAccountId(@Bind("accountId") accountId: AccountId): PatientAccount?
+
+    @SqlQuery("""
+        SELECT account_id, patient_id, name, email, address
+        FROM patient_accounts
+        WHERE name LIKE :name
+        LIMIT 1
+    """)
+    fun findByName(@Bind("name") name: String): PatientAccount?
 }

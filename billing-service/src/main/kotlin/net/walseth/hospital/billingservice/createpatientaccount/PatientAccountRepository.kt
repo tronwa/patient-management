@@ -10,4 +10,7 @@ class PatientAccountRepository (
 
     fun findByAccountId(accountId: AccountId): PatientAccount? =
         patientAccountDao.findByAccountId(accountId)
+
+    fun findByName(name: String): PatientAccount? =
+        patientAccountDao.findByName(name)
 }

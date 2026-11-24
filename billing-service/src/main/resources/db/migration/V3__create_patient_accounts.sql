@@ -6,3 +6,4 @@ CREATE TABLE IF NOT EXISTS patient_accounts (
     address    VARCHAR(500) NOT NULL,
     PRIMARY KEY (account_id)
 );
+

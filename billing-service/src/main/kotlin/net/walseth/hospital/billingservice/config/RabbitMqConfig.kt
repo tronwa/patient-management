@@ -4,8 +4,9 @@ import org.springframework.amqp.core.Binding
 import org.springframework.amqp.core.BindingBuilder
 import org.springframework.amqp.core.DirectExchange
 import org.springframework.amqp.core.Queue
+import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory
+import org.springframework.amqp.rabbit.connection.ConnectionFactory
 import org.springframework.amqp.support.converter.JacksonJsonMessageConverter
-import org.springframework.amqp.support.converter.MessageConverter
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import tools.jackson.databind.json.JsonMapper
@@ -29,8 +30,14 @@ class RabbitMqConfig {
         .with(NEW_PATIENT_KEY)
 
     @Bean
-    fun messageConverter(jsonMapper: JsonMapper): MessageConverter =
-        JacksonJsonMessageConverter(jsonMapper)
+    fun rabbitListenerContainerFactory(
+        connectionFactory: ConnectionFactory,
+        jsonMapper: JsonMapper,
+    ): SimpleRabbitListenerContainerFactory =
+        SimpleRabbitListenerContainerFactory().also {
+            it.setConnectionFactory(connectionFactory)
+            it.setMessageConverter(JacksonJsonMessageConverter(jsonMapper))
+        }
 
     companion object {
         const val PATIENT_REGISTRATION_QUEUE = "patient_registration"
