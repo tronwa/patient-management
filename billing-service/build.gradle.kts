@@ -3,7 +3,6 @@ plugins {
     kotlin("plugin.spring") version "2.3.21"
     id("org.springframework.boot") version "4.1.2"
     id("io.spring.dependency-management") version "1.1.7"
-    id("com.google.protobuf") version "0.9.6"
 }
 
 group = "net.walseth.hospital"
@@ -13,6 +12,7 @@ description = "billing-service"
 val axonVersion = "5.4.1"
 val kotestVersion = "6.2.6"
 val springdocVersion = "3.2.0"
+val jdbiVersion = "3.55.0"
 
 java {
     toolchain {
@@ -35,6 +35,11 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-flyway")
     implementation("org.flywaydb:flyway-core:11.0.0")
     implementation("org.flywaydb:flyway-database-postgresql:11.0.0")
+    implementation("org.jdbi:jdbi3-core:$jdbiVersion")
+    implementation("org.jdbi:jdbi3-sqlobject:$jdbiVersion")
+    implementation("org.jdbi:jdbi3-kotlin:$jdbiVersion")
+    implementation("org.jdbi:jdbi3-kotlin-sqlobject:$jdbiVersion")
+    implementation("org.jdbi:jdbi3-spring:$jdbiVersion")
     implementation("org.springframework.boot:spring-boot-starter-webmvc")
     implementation("org.springframework.boot:spring-boot-starter-amqp")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
