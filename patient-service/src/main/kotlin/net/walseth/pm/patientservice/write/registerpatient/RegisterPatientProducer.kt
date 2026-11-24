@@ -2,6 +2,7 @@ package net.walseth.pm.patientservice.write.registerpatient
 
 import net.walseth.pm.patientservice.common.configs.RabbitMqConfig
 import net.walseth.pm.patientservice.events.PatientRegisteredEvent
+import net.walseth.pm.patientservice.events.toDto
 import net.walseth.pm.patientservice.read.patients.PatientDto
 import org.axonframework.messaging.eventhandling.annotation.EventHandler
 import org.springframework.amqp.core.DirectExchange
@@ -14,14 +15,12 @@ class RegisterPatientProducer(
     val rabbitTemplate: RabbitTemplate,
 ) {
 
-/*
     @EventHandler
     fun submitPatient(patientEvent: PatientRegisteredEvent) {
          rabbitTemplate.convertAndSend(
             patientExchange.name,
             RabbitMqConfig.NEW_PATIENT_KEY,
-            patientEvent.toDto()
+            patientEvent.toDto(),
         )
     }
-*/
 }
